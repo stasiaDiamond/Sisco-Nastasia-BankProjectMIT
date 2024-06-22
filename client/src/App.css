@@ -1,0 +1,51 @@
+.nav-link {
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #000;
+}
+
+.nav-link:hover {
+  background-color: #f8f9fa;
+  color: #0056b3;
+  font-size: 1.2em;
+}
+
+.nav-link-active {
+  background-color: #e2e6ea;
+  color: #0056b3;
+  border-radius: 5px;
+  font-weight: bold; 
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+.card-container {
+  width: 48%; /* Make both cards take up equal width and align side by side */
+  margin: 0 1% 0 0; /* Margin to add space between the cards */
+}
+
+.card-container:last-child {
+  margin-right: 0; /* Ensure last card has no right margin */
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    width: 100%; /* Stack cards vertically on smaller screens */
+    margin: 0 0 20px 0; /* Add bottom margin between stacked cards */
+  }
+
+  .card-container:last-child {
+    margin-bottom: 0; /* Ensure last card has no bottom margin */
+  }
+}
