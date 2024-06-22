@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // Add this line
+const path = require('path');
 const dal = require('./dal');
 require('dotenv').config();
 
