@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/account/all');
+        const response = await axios.get('/account/all'); // Use relative URL
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -29,9 +29,9 @@ function App() {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5001/api/login', { email, password });
+      const response = await axios.post('/api/login', { email, password }); // Use relative URL
       setUser(response.data);
-      const usersResponse = await axios.get('http://localhost:5001/account/all');
+      const usersResponse = await axios.get('/account/all'); // Use relative URL
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -46,9 +46,9 @@ function App() {
 
   const createAccount = async (name, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5001/api/create-account', { name, email, password });
+      const response = await axios.post('/api/create-account', { name, email, password }); // Use relative URL
       setUser(response.data);
-      const usersResponse = await axios.get('http://localhost:5001/account/all');
+      const usersResponse = await axios.get('/account/all'); // Use relative URL
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
