@@ -38,6 +38,8 @@ Begin:
 - npm start inside both int ts to launch
 - serve static files from the React app in app.js: app.use(express.static(path.join(__dirname, '../client/build')));
 - add script to server/package.json: "heroku-postbuild": "cd ../client && npm install && npm run build",
+- Procfile: web: node server/app.js
+- root package.json Heroku expects
 
 Deploy with Heroku CLI:
 
