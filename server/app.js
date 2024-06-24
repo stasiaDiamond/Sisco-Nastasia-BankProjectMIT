@@ -5,7 +5,7 @@ const dal = require('./dal');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cors({
@@ -90,5 +90,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
