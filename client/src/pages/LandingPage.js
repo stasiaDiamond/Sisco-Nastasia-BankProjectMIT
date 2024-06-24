@@ -128,7 +128,7 @@ function Login({ login }) {
       navigate('/account-home');
     } catch (error) {
       console.error('Login failed', error);
-      setStatus('Login failed!');
+      setStatus('Login failed: ' + (error.response?.data || error.message));
     }
   };
 
@@ -174,6 +174,7 @@ function Login({ login }) {
     />
   );
 }
+
 
 function LoginMsg({ setShow }) {
   return (

@@ -39,8 +39,10 @@ function App() {
       navigate('/account-home');
     } catch (error) {
       console.error('Login failed', error);
+      throw error; // Propagate the error to the caller
     }
   };
+
 
   const logout = () => {
     setUser(null);
