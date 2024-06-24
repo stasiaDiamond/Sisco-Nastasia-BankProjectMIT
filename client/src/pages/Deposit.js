@@ -1,7 +1,8 @@
-// client/src/pages/Deposit.js
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 function Deposit({ user }) {
   const [show, setShow] = useState(true);
@@ -11,11 +12,14 @@ function Deposit({ user }) {
 
   useEffect(() => {
     if (user) {
-      axios.get('http://localhost:5001/account/all').then(response => {
+      axios.get(`${API_URL}/account/all`).then(response => {
         const currentUser = response.data.find(u => u.email === user.email);
         if (currentUser) {
           setBalance(currentUser.balance);
         }
+      }).catch(error => {
+        console.error('Error fetching balance:', error);
+        setStatus('Error fetching balance');
       });
     }
   }, [user]);
@@ -30,13 +34,13 @@ function Deposit({ user }) {
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/api/deposit', { email: user.email, amount: depositAmount });
+      const response = await axios.post(`${API_URL}/api/deposit`, { email: user.email, amount: depositAmount });
       setBalance(response.data.balance);
       setStatus(`Deposit successful! Your new balance is: $${response.data.balance}`);
       setShow(false);
     } catch (error) {
       console.error('Deposit failed', error);
-      setStatus('Deposit failed');
+      setStatus('Deposit failed: ' + (error.response?.data || error.message));
     }
   };
 

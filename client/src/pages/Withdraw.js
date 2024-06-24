@@ -1,7 +1,8 @@
-// client/src/pages/Withdraw.js
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 function Withdraw({ user }) {
   const [show, setShow] = useState(true);
@@ -11,11 +12,14 @@ function Withdraw({ user }) {
 
   useEffect(() => {
     if (user) {
-      axios.get('http://localhost:5001/account/all').then(response => {
+      axios.get(`${API_URL}/account/all`).then(response => {
         const currentUser = response.data.find(u => u.email === user.email);
         if (currentUser) {
           setBalance(currentUser.balance);
         }
+      }).catch(error => {
+        console.error('Error fetching balance:', error);
+        setStatus('Error fetching balance');
       });
     }
   }, [user]);
@@ -34,13 +38,13 @@ function Withdraw({ user }) {
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/api/withdraw', { email: user.email, amount: withdrawAmount });
+      const response = await axios.post(`${API_URL}/api/withdraw`, { email: user.email, amount: withdrawAmount });
       setBalance(response.data.balance);
       setStatus(`Withdrawal successful! Your new balance is: $${response.data.balance}`);
       setShow(false);
     } catch (error) {
       console.error('Withdrawal failed', error);
-      setStatus('Withdrawal failed');
+      setStatus('Withdrawal failed: ' + (error.response?.data || error.message));
     }
   };
 
@@ -72,19 +76,20 @@ function Withdraw({ user }) {
           </button>
         </>
       ) : (
-        <WithdrawMsg setShow={setShow} setStatus={setStatus} status={status} />
+        <WithdrawMsg setShow={setShow} setStatus={setStatus} status={status} balance={balance} />
       )}
     />
   );
 }
 
-function WithdrawMsg({ setShow, setStatus, status }) {
+function WithdrawMsg({ setShow, setStatus, status, balance }) {
   return (
     <>
       <h5>Success</h5>
       <p>{status}</p>
+      <label>Current Balance: {balance !== null ? `$${balance}` : 'Fetching balance...'}</label><br />
       <button
-        type="submit"
+        type="button"
         className="btn btn-light"
         onClick={() => {
           setShow(true);
