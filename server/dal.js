@@ -1,17 +1,17 @@
-// server/dal.js
 const mongoose = require('mongoose');
 require('dotenv').config();
 const User = require('./models/user'); // Ensure this path is correct
 
 const url = process.env.MONGODB_URI;
 
-
 if (!url) {
   console.error('MONGODB_URI is not defined. Please check your .env file.');
   process.exit(1);
 }
 
-mongoose.connect(url);
+mongoose.connect(url, {
+  // No options are needed here as these options are deprecated
+});
 
 let db = mongoose.connection;
 
