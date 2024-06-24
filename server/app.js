@@ -13,6 +13,12 @@ app.use(cors({
   credentials: true
 }));
 
+// Middleware to disable caching
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -78,7 +84,7 @@ app.get('/account/all', async (req, res) => {
   }
 });
 
-// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+// catchall handler
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

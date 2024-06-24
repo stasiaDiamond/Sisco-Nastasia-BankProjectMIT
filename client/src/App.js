@@ -1,4 +1,3 @@
-// client/src/App.js
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
@@ -19,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersResponse = await axios.get('/account/all');
+        const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
         setUsers(usersResponse.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -32,7 +31,7 @@ function App() {
     try {
       const response = await axios.post('/api/login', { email, password });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all');
+      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -49,7 +48,7 @@ function App() {
     try {
       const response = await axios.post('/api/deposit', { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all');
+      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -61,7 +60,7 @@ function App() {
     try {
       const response = await axios.post('/api/withdraw', { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all');
+      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -73,7 +72,7 @@ function App() {
     try {
       const response = await axios.post('/api/create-account', { name, email, password });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all');
+      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
