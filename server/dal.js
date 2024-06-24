@@ -76,4 +76,16 @@ async function all() {
   }
 }
 
-module.exports = { create, findUserByEmail, deposit, withdraw, all };
+async function deleteUserByEmail(email) {
+  try {
+    const result = await User.deleteOne({ email });
+    return result;
+  } catch (err) {
+    console.error('Delete user failed', err);
+    throw err;
+  }
+}
+
+module.exports = { create, findUserByEmail, deposit, withdraw, all, deleteUserByEmail };
+
+

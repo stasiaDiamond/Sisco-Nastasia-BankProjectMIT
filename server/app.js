@@ -84,6 +84,23 @@ app.get('/account/all', async (req, res) => {
   }
 });
 
+app.delete('/api/delete-user/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await dal.deleteUserByEmail(email);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    res.send('User deleted');
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).send('Error deleting user');
+  }
+});
+
+
+
+
 // catchall handler
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));

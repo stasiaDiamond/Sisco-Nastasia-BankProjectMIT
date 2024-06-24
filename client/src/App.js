@@ -10,7 +10,6 @@ import AllData from './pages/AllData';
 import './App.css';
 import axios from 'axios';
 
-// Use the environment variable for the API URL
 const API_URL = process.env.REACT_APP_API_URL || '';
 
 function App() {
@@ -18,15 +17,16 @@ function App() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  const fetchUsers = async () => {
+    try {
+      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
+      setUsers(usersResponse.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
-        setUsers(usersResponse.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
     fetchUsers();
   }, []);
 
@@ -34,15 +34,12 @@ function App() {
     try {
       const response = await axios.post(`${API_URL}/api/login`, { email, password });
       setUser(response.data);
-      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
-      setUsers(usersResponse.data);
+      fetchUsers();
       navigate('/account-home');
     } catch (error) {
       console.error('Login failed', error);
-      throw error; // Propagate the error to the caller
     }
   };
-
 
   const logout = () => {
     setUser(null);
@@ -53,8 +50,7 @@ function App() {
     try {
       const response = await axios.post(`${API_URL}/api/deposit`, { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
-      setUsers(usersResponse.data);
+      fetchUsers();
       navigate('/account-home');
     } catch (error) {
       console.error('Deposit failed', error);
@@ -65,8 +61,7 @@ function App() {
     try {
       const response = await axios.post(`${API_URL}/api/withdraw`, { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
-      setUsers(usersResponse.data);
+      fetchUsers();
       navigate('/account-home');
     } catch (error) {
       console.error('Withdrawal failed', error);
@@ -77,8 +72,7 @@ function App() {
     try {
       const response = await axios.post(`${API_URL}/api/create-account`, { name, email, password });
       setUser(response.data);
-      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
-      setUsers(usersResponse.data);
+      fetchUsers();
       navigate('/account-home');
     } catch (error) {
       console.error('Create account failed', error);
@@ -95,7 +89,7 @@ function App() {
           <Route path="/deposit" element={<Deposit user={user} deposit={deposit} />} />
           <Route path="/withdraw" element={<Withdraw user={user} withdraw={withdraw} />} />
           <Route path="/balance" element={<Balance user={user} />} />
-          <Route path="/all-data" element={<AllData users={users} />} />
+          <Route path="/all-data" element={<AllData users={users} fetchUsers={fetchUsers} />} />
         </Routes>
       </div>
     </>
