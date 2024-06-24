@@ -10,6 +10,8 @@ import AllData from './pages/AllData';
 import './App.css';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || '';
+
 function App() {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
@@ -18,7 +20,7 @@ function App() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
+        const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
         setUsers(usersResponse.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -29,9 +31,9 @@ function App() {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/login', { email, password });
+      const response = await axios.post(`${API_URL}/api/login`, { email, password });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
+      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -46,9 +48,9 @@ function App() {
 
   const deposit = async (email, amount) => {
     try {
-      const response = await axios.post('/api/deposit', { email, amount });
+      const response = await axios.post(`${API_URL}/api/deposit`, { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
+      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -58,9 +60,9 @@ function App() {
 
   const withdraw = async (email, amount) => {
     try {
-      const response = await axios.post('/api/withdraw', { email, amount });
+      const response = await axios.post(`${API_URL}/api/withdraw`, { email, amount });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
+      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
@@ -70,9 +72,9 @@ function App() {
 
   const createAccount = async (name, email, password) => {
     try {
-      const response = await axios.post('/api/create-account', { name, email, password });
+      const response = await axios.post(`${API_URL}/api/create-account`, { name, email, password });
       setUser(response.data);
-      const usersResponse = await axios.get('/account/all', { headers: { 'Cache-Control': 'no-cache' } });
+      const usersResponse = await axios.get(`${API_URL}/account/all`, { headers: { 'Cache-Control': 'no-cache' } });
       setUsers(usersResponse.data);
       navigate('/account-home');
     } catch (error) {
