@@ -1,14 +1,15 @@
-// client/src/pages/Balance.js
 import React, { useEffect, useState } from 'react';
 import Card from '../components/Card';
 import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 function Balance({ user }) {
   const [balance, setBalance] = useState(null);
 
   useEffect(() => {
     if (user) {
-      axios.get('http://localhost:5001/account/all').then(response => {
+      axios.get(`${API_URL}/account/all`).then(response => {
         const currentUser = response.data.find(u => u.email === user.email);
         if (currentUser) {
           setBalance(currentUser.balance);
