@@ -42,7 +42,9 @@ function CreateAccount({ createAccount }) {
       setShow(false);
       setStatus('Account created successfully');
       setAccountCreated(true);
-      navigate('/account-home');
+      setTimeout(() => {
+        navigate('/account-home');
+      }, 2000); // Delay navigation to allow message display
     } catch (error) {
       console.error('Create account failed', error);
       setStatus('Failed to create account: ' + error.message);
