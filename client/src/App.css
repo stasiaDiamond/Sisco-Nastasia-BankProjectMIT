@@ -1,3 +1,4 @@
+/* client/src/App.css */
 .nav-link {
   padding: 5px 10px;
   border-radius: 5px;
@@ -16,6 +17,13 @@
   color: #0056b3;
   border-radius: 5px;
   font-weight: bold; 
+}
+
+.navbar-text {
+  margin-left: auto;
+  padding-right: 15px;
+  font-size: 1em;
+  color: #000;
 }
 
 .d-flex {
