@@ -1,5 +1,5 @@
 // client/src/pages/LandingPage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 
@@ -22,7 +22,14 @@ function CreateAccount({ createAccount }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accountCreated, setAccountCreated] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      setAccountCreated(false);
+    };
+  }, []);
 
   const handle = async () => {
     if (name === '' || email === '' || password.length < 8) {
@@ -34,6 +41,7 @@ function CreateAccount({ createAccount }) {
       await createAccount(name, email, password);
       setShow(false);
       setStatus('Account created successfully');
+      setAccountCreated(true);
       navigate('/account-home');
     } catch (error) {
       console.error('Create account failed', error);
@@ -44,52 +52,55 @@ function CreateAccount({ createAccount }) {
   const isFormValid = name !== '' && email !== '' && password.length >= 8;
 
   return (
-    <Card
-      bgcolor="primary"
-      header="Create Account"
-      status={status}
-      body={show ? (
-        <>
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          /><br />
+    <>
+      {accountCreated && <h1>Success! Account created</h1>}
+      <Card
+        bgcolor="primary"
+        header="Create Account"
+        status={status}
+        body={show ? (
+          <>
+            <label>Name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            /><br />
 
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          /><br />
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            /><br />
 
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          /><br />
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            /><br />
 
-          <button
-            type="submit"
-            className="btn btn-success"
-            onClick={handle}
-            disabled={!isFormValid}
-          >
-            Create Account
-          </button>
-        </>
-      ) : (
-        <CreateMsg setShow={setShow} />
-      )}
-    />
+            <button
+              type="submit"
+              className="btn btn-success"
+              onClick={handle}
+              disabled={!isFormValid}
+            >
+              Create Account
+            </button>
+          </>
+        ) : (
+          <CreateMsg setShow={setShow} />
+        )}
+      />
+    </>
   );
 }
 
