@@ -10,6 +10,7 @@ import AllData from './pages/AllData';
 import './App.css';
 import axios from 'axios';
 
+// Use the environment variable for the API URL
 const API_URL = process.env.REACT_APP_API_URL || '';
 
 function App() {
