@@ -39,7 +39,6 @@ function CreateAccount({ createAccount }) {
 
     try {
       await createAccount(name, email, password);
-      setShow(false);
       setStatus('Account created successfully');
       setAccountCreated(true);
       setTimeout(() => {
