@@ -81,3 +81,11 @@ Database Connection Management: Manages the MongoDB connection (connectDB() func
 Database Operations: Defines functions (create() and all()) for interacting with the database (User model in this case).
 Model Integration: Imports and utilizes Mongoose models (User and potentially Transaction) for structured data handling.
 Error Handling: Catches and logs errors related to database operations or connections.
+
+
+Changes made:
+
+Added accountCreated state to control the display of the success message.
+Set the accountCreated state to true when the account is created successfully.
+Added a setTimeout to delay navigation by 2 seconds, allowing the success message to be displayed briefly before redirecting to the account home page.
+With this implementation, the "Account Created!" message will be shown for 2 seconds before navigating to the account home page.

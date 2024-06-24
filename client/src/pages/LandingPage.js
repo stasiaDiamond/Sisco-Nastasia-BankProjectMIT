@@ -54,7 +54,7 @@ function CreateAccount({ createAccount }) {
   const isFormValid = name !== '' && email !== '' && password.length >= 8;
 
   return (
-    <>
+    <div>
       {accountCreated && <h1>Success! Account created</h1>}
       <Card
         bgcolor="primary"
@@ -102,7 +102,7 @@ function CreateAccount({ createAccount }) {
           <CreateMsg setShow={setShow} />
         )}
       />
-    </>
+    </div>
   );
 }
 
