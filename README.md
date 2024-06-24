@@ -53,6 +53,11 @@ Deploy with Heroku CLI:
 - heroku config:set `MONGODB_URI=<your_mongodb_uri>`
 - heroku open
 
+Edits:
+
+- npm run build in client
+- push cycle to GH if instead of Heroku CLI
+
 ## Improvements
 
 Created server/models folder:
@@ -81,7 +86,6 @@ Database Connection Management: Manages the MongoDB connection (connectDB() func
 Database Operations: Defines functions (create() and all()) for interacting with the database (User model in this case).
 Model Integration: Imports and utilizes Mongoose models (User and potentially Transaction) for structured data handling.
 Error Handling: Catches and logs errors related to database operations or connections.
-
 
 Changes made:
 

@@ -1,5 +1,5 @@
 // client/src/pages/LandingPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 
@@ -25,12 +25,6 @@ function CreateAccount({ createAccount }) {
   const [accountCreated, setAccountCreated] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    return () => {
-      setAccountCreated(false);
-    };
-  }, []);
-
   const handle = async () => {
     if (name === '' || email === '' || password.length < 8) {
       alert('All fields are required and password must be at least 8 characters long');
@@ -54,7 +48,7 @@ function CreateAccount({ createAccount }) {
 
   return (
     <div>
-      {accountCreated && <h1>Success! Account created</h1>}
+      {accountCreated && <h1 style={{ color: 'green' }}>Success! Account created</h1>}
       <Card
         bgcolor="primary"
         header="Create Account"
